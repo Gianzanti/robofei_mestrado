@@ -1,0 +1,33 @@
+[project]
+name = "robofei"
+version = "0.1.0"
+description = "Darwin OP3 Gym MuJoCo Environment"
+readme = "README.md"
+authors = [{ name = "Fabio Gianzanti", email = "pardal@hotmail.com" }]
+requires-python = ">=3.12"
+dependencies = [
+    "gymnasium>=1.2.0",
+    "imageio>=2.37.0",
+    "mujoco>=3.3.5",
+    "stable-baselines3 >=2.7.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+# [project.scripts]
+# robofei = "robofei.__main__:main"
+
+[build-system]
+requires = ["uv_build>=0.8.14,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "semver>=3.0.4",
+    "toml>=0.10.2",
+]

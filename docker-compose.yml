@@ -1,0 +1,26 @@
+services:
+  robofei:
+    build: .
+    volumes:
+      - .:/robot
+    working_dir: /robot
+    tty: true
+    # # Default: run tests with hot reload
+    # command: uv run watchfiles --filter python "pytest -q"
+
+    develop:
+      # Create a `watch` configuration to update the app
+      # https://docs.docker.com/compose/file-watch/#compose-watch-versus-bind-mounts
+      watch:
+        # Sync the working directory with the `/robot` directory in the container
+        - action: sync
+          path: .
+          target: /robot
+          # Exclude the project virtual environment — it could be for a
+          # different platform in the container
+          ignore:
+            - .venv/
+
+        # Rebuild the image if dependencies change by checking uv.lock
+        - action: rebuild
+          path: ./uv.lock
