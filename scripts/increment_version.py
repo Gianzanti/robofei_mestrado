@@ -38,9 +38,9 @@ if __name__ == "__main__":
 
     except FileNotFoundError:
         print("Error: pyproject.toml not found.")
-    
+
     except ValueError as e: # Catch the exception raised above
         print(f"Error: {e}")
-    
+
     except Exception as e:
         print(f"An error occurred: {e}")
