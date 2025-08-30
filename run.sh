@@ -2,6 +2,7 @@
 # docker compose build
 
 # Dev: run tests with hot reload
+xhost +local:
 docker compose run --rm robofei
 
 # # Run CLI with hot reload

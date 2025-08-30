@@ -1,6 +1,24 @@
 FROM ghcr.io/astral-sh/uv:python3.12-trixie-slim
 
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    build-essential \
+    libgl1-mesa-dev \
+    libx11-dev \
+    libxcursor-dev \
+    libxrandr-dev \
+    libxinerama-dev \
+    libxi-dev \
+    libegl1-mesa-dev \
+    libvulkan-dev \
+    xauth \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /robot
+
+# Set the environment variable for all subsequent commands
+# ENV MUJOCO_GL=egl
 
 # Enable bytecode compilation
 ENV UV_COMPILE_BYTECODE=1

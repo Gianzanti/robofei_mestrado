@@ -3,10 +3,19 @@ services:
     build: .
     volumes:
       - .:/robot
+      # Mount the X11 socket for communication
+      - /tmp/.X11-unix:/tmp/.X11-unix
     working_dir: /robot
     tty: true
-    # # Default: run tests with hot reload
-    # command: uv run watchfiles --filter python "pytest -q"
+
+    environment:
+      # Pass the host's DISPLAY variable into the container
+      - DISPLAY=${DISPLAY}
+      # - XAUTHORITY=/tmp/.Xauthority
+      # - HOME=/root
+
+      # # Default: run tests with hot reload
+      # command: uv run watchfiles --filter python "pytest -q"
 
     develop:
       # Create a `watch` configuration to update the app
