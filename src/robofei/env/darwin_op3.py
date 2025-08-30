@@ -44,8 +44,8 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         # target_distance: float = 5.0,  # 5.0
 
         # forward_velocity_weight: float = 1.0,  # 2.50,
-        # motor_max_torque: float = 3.0,  # 3.0,
-        # reset_noise_scale: float = 1e-2,
+        motor_max_torque: float = 3.0,  # 3.0,
+        reset_noise_scale: float = 1e-2,
         **kwargs,
     ):
         EzPickle.__init__(
@@ -60,8 +60,8 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
             # reach_target_reward,
             # target_distance,
             # forward_velocity_weight,
-            # motor_max_torque,
-            # reset_noise_scale,
+            motor_max_torque,
+            reset_noise_scale,
             **kwargs,
         )
 
@@ -77,8 +77,8 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         # self._reach_target_reward: float = reach_target_reward
         # self._target_distance: float = target_distance
         # self._fw_vel_rew_weight: float = forward_velocity_weight
-        # self._motor_max_torque = motor_max_torque
-        # self._reset_noise_scale: float = reset_noise_scale
+        self._motor_max_torque = motor_max_torque
+        self._reset_noise_scale: float = reset_noise_scale
 
         MujocoEnv.__init__(
             self,
@@ -175,8 +175,8 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         if not self.is_healthy:
             return True
 
-        if self.data.qpos[0] >= self._target_distance:
-            return True
+        # if self.data.qpos[0] >= self._target_distance:
+        #     return True
 
         return False
 

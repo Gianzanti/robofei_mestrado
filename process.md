@@ -39,3 +39,15 @@ https://www.youtube.com/watch?v=p9L7YFqHGk4
 UV on Containers
 https://www.youtube.com/watch?v=mFyE9xgeKcA
 
+
+### To start running the tests:
+```bash
+uv run pytest -s
+```
+
+### To start running the tests and capture video:
+```bash
+MUJOCO_GL=egl uv run pytest -s
+```
+
+
