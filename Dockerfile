@@ -1,6 +1,7 @@
-FROM ghcr.io/astral-sh/uv:python3.12-trixie-slim
+# debian trixie version doesn't have all needed libs
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install --no-install-recommends -y \
     curl \
     git \
     build-essential \
@@ -13,6 +14,9 @@ RUN apt-get update && apt-get install -y \
     libegl1-mesa-dev \
     libvulkan-dev \
     xauth \
+    xvfb \
+    libglew2.2 \
+    libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /robot

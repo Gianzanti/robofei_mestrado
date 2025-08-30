@@ -10,6 +10,8 @@ dependencies = [
     "imageio>=2.37.0",
     "mujoco>=3.3.5",
     "stable-baselines3 >=2.7.0",
+    "imageio-ffmpeg >= 0.6.0",
+    "pyvirtualdisplay",
 ]
 
 [project.optional-dependencies]
@@ -26,8 +28,4 @@ build-backend = "uv_build"
 where = ["src"]
 
 [dependency-groups]
-dev = [
-    "pytest>=8.4.1",
-    "semver>=3.0.4",
-    "toml>=0.10.2",
-]
+dev = ["pytest>=8.4.1", "semver>=3.0.4", "toml>=0.10.2"]
