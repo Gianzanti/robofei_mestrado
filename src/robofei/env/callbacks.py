@@ -21,13 +21,12 @@ class TensorboardCallback(BaseCallback):
             "z_positions": [],
             "x_velocities": [],
             "y_velocities": [],
-            "health_rewards": [],
+            # "health_rewards": [],
             # "forward_rewards": [],
             # "control_costs": [],
             # "pos_deviation_costs": [],
             # "lateral_velocity_costs": [],
         }
-
 
     def _on_step(self) -> bool:
         """
@@ -39,13 +38,13 @@ class TensorboardCallback(BaseCallback):
         :return: If the callback returns False, training is aborted early.
         """
         for env_idx in range(self.training_env.num_envs):
-            info = self.locals['infos'][env_idx]
-            self.episode_positions['x_positions'].append(info['x_position'])
-            self.episode_positions['y_positions'].append(info['y_position'])
-            self.episode_positions['z_positions'].append(info['z_position'])
-            self.episode_positions['x_velocities'].append(info['x_velocity'])
-            self.episode_positions['y_velocities'].append(info['y_velocity'])
-            self.episode_positions['health_rewards'].append(info['health_reward'])
+            info = self.locals["infos"][env_idx]
+            self.episode_positions["x_positions"].append(info["x_position"])
+            self.episode_positions["y_positions"].append(info["y_position"])
+            self.episode_positions["z_positions"].append(info["z_position"])
+            self.episode_positions["x_velocities"].append(info["x_velocity"])
+            self.episode_positions["y_velocities"].append(info["y_velocity"])
+            # self.episode_positions['health_rewards'].append(info['health_reward'])
             # self.episode_positions['forward_rewards'].append(info['forward_reward'])
             # self.episode_positions['control_costs'].append(info['control_cost'])
             # self.episode_positions['pos_deviation_costs'].append(info['pos_deviation_cost'])
@@ -59,23 +58,23 @@ class TensorboardCallback(BaseCallback):
         """
         # print("005 - Rollout Ended")
         if self.episode_positions:
-            x_values = np.array(self.episode_positions['x_positions'])
-            self.logger.record('mean_episode/pos_x', np.mean(x_values))
+            x_values = np.array(self.episode_positions["x_positions"])
+            self.logger.record("mean_episode/pos_x", np.mean(x_values))
 
-            y_values = np.array(self.episode_positions['y_positions'])
-            self.logger.record('mean_episode/pos_y', np.mean(y_values))
+            y_values = np.array(self.episode_positions["y_positions"])
+            self.logger.record("mean_episode/pos_y", np.mean(y_values))
 
-            z_values = np.array(self.episode_positions['z_positions'])
-            self.logger.record('mean_episode/pos_z', np.mean(z_values))
+            z_values = np.array(self.episode_positions["z_positions"])
+            self.logger.record("mean_episode/pos_z", np.mean(z_values))
 
-            x_vel_values = np.array(self.episode_positions['x_velocities'])
-            self.logger.record('mean_episode/vel_x', np.mean(x_vel_values))
+            x_vel_values = np.array(self.episode_positions["x_velocities"])
+            self.logger.record("mean_episode/vel_x", np.mean(x_vel_values))
 
-            y_vel_values = np.array(self.episode_positions['y_velocities'])
-            self.logger.record('mean_episode/vel_y', np.mean(y_vel_values))
+            y_vel_values = np.array(self.episode_positions["y_velocities"])
+            self.logger.record("mean_episode/vel_y", np.mean(y_vel_values))
 
-            health_values = np.array(self.episode_positions['health_rewards'])
-            self.logger.record('mean_episode/health_reward', np.mean(health_values))
+            # health_values = np.array(self.episode_positions['health_rewards'])
+            # self.logger.record('mean_episode/health_reward', np.mean(health_values))
 
             # forward_values = np.array(self.episode_positions['forward_rewards'])
             # self.logger.record('mean_episode/forward_reward', np.mean(forward_values))
@@ -95,7 +94,7 @@ class TensorboardCallback(BaseCallback):
             "z_positions": [],
             "x_velocities": [],
             "y_velocities": [],
-            "health_rewards": [],
+            # "health_rewards": [],
             # "forward_rewards": [],
             # "control_costs": [],
             # "pos_deviation_costs": [],
