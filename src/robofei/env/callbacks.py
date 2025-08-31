@@ -21,7 +21,7 @@ class TensorboardCallback(BaseCallback):
             "z_positions": [],
             "x_velocities": [],
             "y_velocities": [],
-            # "health_rewards": [],
+            "health_rewards": [],
             # "forward_rewards": [],
             # "control_costs": [],
             # "pos_deviation_costs": [],
@@ -44,7 +44,7 @@ class TensorboardCallback(BaseCallback):
             self.episode_positions["z_positions"].append(info["z_position"])
             self.episode_positions["x_velocities"].append(info["x_velocity"])
             self.episode_positions["y_velocities"].append(info["y_velocity"])
-            # self.episode_positions['health_rewards'].append(info['health_reward'])
+            self.episode_positions["health_rewards"].append(info["health_reward"])
             # self.episode_positions['forward_rewards'].append(info['forward_reward'])
             # self.episode_positions['control_costs'].append(info['control_cost'])
             # self.episode_positions['pos_deviation_costs'].append(info['pos_deviation_cost'])
@@ -73,8 +73,8 @@ class TensorboardCallback(BaseCallback):
             y_vel_values = np.array(self.episode_positions["y_velocities"])
             self.logger.record("mean_episode/vel_y", np.mean(y_vel_values))
 
-            # health_values = np.array(self.episode_positions['health_rewards'])
-            # self.logger.record('mean_episode/health_reward', np.mean(health_values))
+            health_values = np.array(self.episode_positions["health_rewards"])
+            self.logger.record("mean_episode/health_reward", np.mean(health_values))
 
             # forward_values = np.array(self.episode_positions['forward_rewards'])
             # self.logger.record('mean_episode/forward_reward', np.mean(forward_values))
@@ -94,7 +94,7 @@ class TensorboardCallback(BaseCallback):
             "z_positions": [],
             "x_velocities": [],
             "y_velocities": [],
-            # "health_rewards": [],
+            "health_rewards": [],
             # "forward_rewards": [],
             # "control_costs": [],
             # "pos_deviation_costs": [],
