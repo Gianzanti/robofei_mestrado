@@ -176,6 +176,9 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         # if self.data.qpos[0] >= self._target_distance:
         #     return True
 
+        if self.data.qpos[2] <= 0.1:
+            return True
+
         return False
 
     def step(self, normalized_action):
