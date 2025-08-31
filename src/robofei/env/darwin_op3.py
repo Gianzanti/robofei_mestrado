@@ -13,6 +13,7 @@ DEFAULT_CAMERA_CONFIG = {
     "elevation": -5.0,
 }
 
+
 def mass_center(model, data):
     mass = np.expand_dims(model.body_mass, axis=1)
     xpos = data.xipos
@@ -35,14 +36,11 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         default_camera_config: Dict[str, Union[float, int]] = DEFAULT_CAMERA_CONFIG,
         keep_alive_reward: float = 1.0,  # 0.1
         healthy_z_range: Tuple[float, float] = (0.265, 0.310),
-
         # pos_deviation_weight: float = 10.0,  # 5e-2,
         # lateral_velocity_weight: float = 5.0,  # 5e-2,
-
         # ctrl_cost_weight: float = 1e-3,  # 5e-2,
         # reach_target_reward: float = 100.0,  # 10000.0,
         # target_distance: float = 5.0,  # 5.0
-
         # forward_velocity_weight: float = 1.0,  # 2.50,
         motor_max_torque: float = 3.0,  # 3.0,
         reset_noise_scale: float = 1e-2,
@@ -141,17 +139,17 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
 
     def _get_rew(self, velocity, position_before, position_after):
         [x_velocity, y_velocity] = velocity
-        health_reward = self._keep_alive_reward * self.is_healthy
+        # health_reward = self._keep_alive_reward * self.is_healthy
         # forward_reward = self._fw_vel_rew_weight * x_velocity
         # control_cost = self._ctrl_cost_weight * np.sum(np.square(self.data.ctrl))
         # pos_deviation_cost = self._pos_deviation_weight * (self.data.qpos[1] ** 2)
         # lateral_velocity_cost = self._lateral_velocity_weight * (y_velocity ** 2)
 
-        reward = health_reward
         # reward = (
         #     health_reward + forward_reward + control_cost -
         #   pos_deviation_cost - lateral_velocity_cost
         # )
+        reward = 0.0
 
         # if self.data.qpos[0] >= self._target_distance:
         #     health_reward = 0
@@ -162,7 +160,7 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         #     reward = self._reach_target_reward
 
         reward_info = {
-            "health_reward": health_reward,
+            # "health_reward": health_reward,
             # "forward_reward": forward_reward,
             # "control_cost": control_cost,
             # "pos_deviation_cost": pos_deviation_cost,
@@ -172,8 +170,8 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         return reward, reward_info
 
     def termination(self):
-        if not self.is_healthy:
-            return True
+        # if not self.is_healthy:
+        #     return True
 
         # if self.data.qpos[0] >= self._target_distance:
         #     return True

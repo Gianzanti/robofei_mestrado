@@ -84,3 +84,7 @@ class DarwinOp3_TestModel(unittest.TestCase):
         # Clean up
         renderer.close()
         vdisplay.stop()
+
+
+
+        

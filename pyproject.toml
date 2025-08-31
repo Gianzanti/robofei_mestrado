@@ -29,3 +29,11 @@ where = ["src"]
 
 [dependency-groups]
 dev = ["pytest>=8.4.1", "semver>=3.0.4", "toml>=0.10.2"]
+
+[tool.ruff]
+line-length = 88
+exclude = ["tests/*"]
+# lint.extend-select = ["PTH"]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "C90", "RUF"]
