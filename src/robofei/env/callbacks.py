@@ -22,8 +22,8 @@ class TensorboardCallback(BaseCallback):
             "x_velocities": [],
             "y_velocities": [],
             "health_rewards": [],
+            "control_costs": [],
             # "forward_rewards": [],
-            # "control_costs": [],
             # "pos_deviation_costs": [],
             # "lateral_velocity_costs": [],
         }
@@ -45,8 +45,8 @@ class TensorboardCallback(BaseCallback):
             self.episode_positions["x_velocities"].append(info["x_velocity"])
             self.episode_positions["y_velocities"].append(info["y_velocity"])
             self.episode_positions["health_rewards"].append(info["health_reward"])
+            self.episode_positions["control_costs"].append(info["control_cost"])
             # self.episode_positions['forward_rewards'].append(info['forward_reward'])
-            # self.episode_positions['control_costs'].append(info['control_cost'])
             # self.episode_positions['pos_deviation_costs'].append(info['pos_deviation_cost'])
             # self.episode_positions['lateral_velocity_costs'].append(info['lateral_velocity_cost'])
 
@@ -76,11 +76,11 @@ class TensorboardCallback(BaseCallback):
             health_values = np.array(self.episode_positions["health_rewards"])
             self.logger.record("mean_episode/health_reward", np.mean(health_values))
 
+            control_costs = np.array(self.episode_positions["control_costs"])
+            self.logger.record("mean_episode/control_cost", np.mean(control_costs))
+
             # forward_values = np.array(self.episode_positions['forward_rewards'])
             # self.logger.record('mean_episode/forward_reward', np.mean(forward_values))
-
-            # control_costs = np.array(self.episode_positions['control_costs'])
-            # self.logger.record('mean_episode/control_cost', np.mean(control_costs))
 
             # pos_deviation_costs = np.array(self.episode_positions['pos_deviation_costs'])
             # self.logger.record('mean_episode/pos_deviation_cost', np.mean(pos_deviation_costs))
@@ -95,8 +95,8 @@ class TensorboardCallback(BaseCallback):
             "x_velocities": [],
             "y_velocities": [],
             "health_rewards": [],
+            "control_costs": [],
             # "forward_rewards": [],
-            # "control_costs": [],
             # "pos_deviation_costs": [],
             # "lateral_velocity_costs": [],
         }
