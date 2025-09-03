@@ -37,11 +37,11 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         keep_alive_reward: float = 1.0,  # 0.1
         healthy_z_range: Tuple[float, float] = (0.275, 0.300),
         ctrl_cost_weight: float = 1e-3,  # 5e-2,
+        target_distance: float = 5.0,  # 5.0
+        forward_velocity_weight: float = 1.0,  # 2.50,
+        reach_target_reward: float = 100.0,  # 10000.0,
         # pos_deviation_weight: float = 10.0,  # 5e-2,
         # lateral_velocity_weight: float = 5.0,  # 5e-2,
-        # reach_target_reward: float = 100.0,  # 10000.0,
-        # target_distance: float = 5.0,  # 5.0
-        # forward_velocity_weight: float = 1.0,  # 2.50,
         motor_max_torque: float = 3.0,  # 3.0,
         reset_noise_scale: float = 1e-2,
         **kwargs,
@@ -53,11 +53,11 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
             keep_alive_reward,
             healthy_z_range,
             ctrl_cost_weight,
+            forward_velocity_weight,
+            target_distance,
+            reach_target_reward,
             # pos_deviation_weight,
             # lateral_velocity_weight,
-            # reach_target_reward,
-            # target_distance,
-            # forward_velocity_weight,
             motor_max_torque,
             reset_noise_scale,
             **kwargs,
@@ -70,11 +70,11 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         self._keep_alive_reward: float = keep_alive_reward
         self._healthy_z_range: Tuple[float, float] = healthy_z_range
         self._ctrl_cost_weight: float = ctrl_cost_weight
+        self._fw_vel_rew_weight: float = forward_velocity_weight
+        self._target_distance: float = target_distance
+        self._reach_target_reward: float = reach_target_reward
         # self._pos_deviation_weight: float = pos_deviation_weight
         # self._lateral_velocity_weight: float = lateral_velocity_weight
-        # self._reach_target_reward: float = reach_target_reward
-        # self._target_distance: float = target_distance
-        # self._fw_vel_rew_weight: float = forward_velocity_weight
         self._motor_max_torque = motor_max_torque
         self._reset_noise_scale: float = reset_noise_scale
 
@@ -141,7 +141,7 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         [x_velocity, y_velocity] = velocity
         health_reward = self._keep_alive_reward * self.is_healthy
         control_cost = self._ctrl_cost_weight * np.sum(np.square(self.data.ctrl))
-        # forward_reward = self._fw_vel_rew_weight * x_velocity
+        forward_reward = self._fw_vel_rew_weight * x_velocity
         # pos_deviation_cost = self._pos_deviation_weight * (self.data.qpos[1] ** 2)
         # lateral_velocity_cost = self._lateral_velocity_weight * (y_velocity ** 2)
 
@@ -149,20 +149,20 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         #     health_reward + forward_reward + control_cost -
         #   pos_deviation_cost - lateral_velocity_cost
         # )
-        reward = health_reward - control_cost
+        reward = health_reward - control_cost + forward_reward
 
-        # if self.data.qpos[0] >= self._target_distance:
-        #     health_reward = 0
-        #     forward_reward = 0
-        #     control_cost = 0
-        #     pos_deviation_cost = 0
-        #     lateral_velocity_cost = 0
-        #     reward = self._reach_target_reward
+        if self.data.qpos[0] >= self._target_distance:
+            health_reward = 0
+            forward_reward = 0
+            control_cost = 0
+            pos_deviation_cost = 0
+            lateral_velocity_cost = 0
+            reward = self._reach_target_reward
 
         reward_info = {
             "health_reward": health_reward,
             "control_cost": control_cost,
-            # "forward_reward": forward_reward,
+            "forward_reward": forward_reward,
             # "pos_deviation_cost": pos_deviation_cost,
             # "lateral_velocity_cost": lateral_velocity_cost,
         }
@@ -173,11 +173,8 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         if not self.is_healthy:
             return True
 
-        # if self.data.qpos[0] >= self._target_distance:
-        #     return True
-
-        # if self.data.qpos[2] <= 0.1:
-        #     return True
+        if self.data.qpos[0] >= self._target_distance:
+            return True
 
         return False
 
