@@ -7,10 +7,10 @@ from gymnasium.spaces import Box
 from gymnasium.utils import EzPickle
 
 DEFAULT_CAMERA_CONFIG = {
-    "trackbodyid": 2,
-    "distance": 2.5,
-    "lookat": np.array((0.0, 0.0, 0.5)),
-    "elevation": -5.0,
+    "trackbodyid": 0,
+    # "distance": 2.5,
+    # "lookat": np.array((0.0, 0.0, 0.5)),
+    # "elevation": -5.0,
 }
 
 
