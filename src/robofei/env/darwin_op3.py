@@ -34,7 +34,8 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         self,
         frame_skip: int = 5,
         default_camera_config: Dict[str, Union[float, int]] = DEFAULT_CAMERA_CONFIG,
-        healthy_z_range: Tuple[float, float] = (0.275, 0.300),
+        # healthy_z_range: Tuple[float, float] = (0.275, 0.300),
+        healthy_z_range: Tuple[float, float] = (0.075, 0.300),
         keep_alive_reward: float = 0.0, #1.0,  # 0.1
         ctrl_cost_weight: float = 0.0, # 1e-3,  # 5e-2,
         target_distance: float = 100.0, #2.0,  # 5.0
