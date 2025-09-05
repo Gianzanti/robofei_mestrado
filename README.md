@@ -20,4 +20,6 @@
 
 - step_007: reward to stay on foot
 
-- step_008: reward to minimize efforts
+- step_008: reward to minimize efforts (loading best model from previous run)
+
+- step_009: reward to walk forward  (loading best model from previous run)
