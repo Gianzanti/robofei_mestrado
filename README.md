@@ -19,3 +19,5 @@
 - step_006: first running on training environment, without rewards
 
 - step_007: reward to stay on foot
+
+- step_008: reward to minimize efforts
