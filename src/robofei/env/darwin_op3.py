@@ -34,15 +34,15 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         self,
         frame_skip: int = 5,
         default_camera_config: Dict[str, Union[float, int]] = DEFAULT_CAMERA_CONFIG,
-        healthy_z_range: Tuple[float, float] = (0.275, 0.300),
-        keep_alive_reward: float = 0.0, #1.0,  # 0.1
-        ctrl_cost_weight: float = 0.0, # 1e-3,  # 5e-2,
-        target_distance: float = 100.0, #2.0,  # 5.0
-        forward_velocity_weight: float = 0.0, #1.0,  # 2.50,
-        reach_target_reward: float = 0.0, #100.0,  # 10000.0,
+        healthy_z_range: Tuple[float, float] = (0.270, 0.300),
+        keep_alive_reward: float = 1.0,
+        ctrl_cost_weight: float = 1e-3,
+        target_distance: float = 100.0,
+        forward_velocity_weight: float = 10.0,
+        reach_target_reward: float = 100.0,
         # pos_deviation_weight: float = 10.0,  # 5e-2,
         # lateral_velocity_weight: float = 5.0,  # 5e-2,
-        motor_max_torque: float = 3.0,  # 3.0,
+        motor_max_torque: float = 3.0,
         reset_noise_scale: float = 1e-2,
         **kwargs,
     ):
