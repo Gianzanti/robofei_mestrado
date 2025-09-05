@@ -149,7 +149,7 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         #     health_reward + forward_reward + control_cost -
         #   pos_deviation_cost - lateral_velocity_cost
         # )
-        reward = health_reward - control_cost + forward_reward
+        reward = health_reward - control_cost + forward_reward + 1
 
         if self.data.qpos[0] >= self._target_distance:
             health_reward = 0
@@ -175,13 +175,16 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
 
         # if self.data.qpos[0] >= self._target_distance:
         #     return True
+        # print(self.data.time)
+        # return self.data.time >= 20.0
 
         return False
 
     def step(self, normalized_action):
+        # print("step")
         # get the current position of the robot, before action
         position_before = mass_center(self.model, self.data)
-
+    
         # denormalize the action to the range of the motors
         action = normalized_action * self._motor_max_torque
         self.do_simulation(action, self.frame_skip)
