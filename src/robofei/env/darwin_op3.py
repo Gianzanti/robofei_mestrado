@@ -37,7 +37,7 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         healthy_z_range: Tuple[float, float] = (0.275, 0.300),
         keep_alive_reward: float = 0.0, #1.0,  # 0.1
         ctrl_cost_weight: float = 0.0, # 1e-3,  # 5e-2,
-        target_distance: float = 0.0, #2.0,  # 5.0
+        target_distance: float = 100.0, #2.0,  # 5.0
         forward_velocity_weight: float = 0.0, #1.0,  # 2.50,
         reach_target_reward: float = 0.0, #100.0,  # 10000.0,
         # pos_deviation_weight: float = 10.0,  # 5e-2,
@@ -149,14 +149,14 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         #     health_reward + forward_reward + control_cost -
         #   pos_deviation_cost - lateral_velocity_cost
         # )
-        reward = health_reward - control_cost + forward_reward + 1
+        reward = health_reward - control_cost + forward_reward
 
         if self.data.qpos[0] >= self._target_distance:
             health_reward = 0
             forward_reward = 0
             control_cost = 0
-            pos_deviation_cost = 0
-            lateral_velocity_cost = 0
+            # pos_deviation_cost = 0
+            # lateral_velocity_cost = 0
             reward = self._reach_target_reward
 
         reward_info = {
@@ -170,13 +170,11 @@ class DarwinOp3Env(MujocoEnv, EzPickle):
         return reward, reward_info
 
     def termination(self):
-        # if not self.is_healthy:
-        #     return True
+        if not self.is_healthy:
+            return True
 
-        # if self.data.qpos[0] >= self._target_distance:
-        #     return True
-        # print(self.data.time)
-        # return self.data.time >= 20.0
+        if self.data.qpos[0] >= self._target_distance:
+            return True
 
         return False
 
