@@ -1,6 +1,6 @@
 [project]
 name = "robofei"
-version = "0.1.18"
+version = "0.1.19"
 description = "Darwin OP3 Gym MuJoCo Environment"
 readme = "README.md"
 requires-python = ">=3.12"
